@@ -1,0 +1,11 @@
+/.idea
+/vendor
+/runtime
+/.idea
+/*.php
+*.DS_Store
+.scannerwork
+sftp-config.json
+composer.lock
+.php-cs-fixer.cache
+.phpunit.result.cache

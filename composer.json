@@ -1,0 +1,29 @@
+{
+  "name": "openphp/console",
+  "type": "library",
+  "license": "Apache-2.0",
+  "description": "A PHP console application",
+  "authors": [
+    {
+      "name": "wangzhiqiang",
+      "email": "zhiqiangwang@aliyun.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "ext-json": "*",
+    "symfony/console": "^5.4",
+    "symfony/process": "^5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Openphp\\Console\\": "src/"
+    }
+  },
+  "scripts": {
+    "fresh": [
+      "rm -rf vendor composer.lock",
+      "composer update"
+    ]
+  }
+}
