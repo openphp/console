@@ -1,0 +1,36 @@
+#!/usr/bin/env php
+
+<?php
+
+use Openphp\Console\Console;
+
+$file = null;
+
+$autoloadFile = [
+    __DIR__ . '/../../../autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . 'vendor/autoload.php',
+];
+foreach ($autoloadFile as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
+if (!file_exists($file)) {
+    die("include composer autoload.php fail\n");
+}
+const BASE_PATH = __DIR__;
+
+$console          = new Console();
+$wangConsoleClass = [
+    \App\OpenphpConsole::class,
+];
+foreach ($wangConsoleClass as $app) {
+    if (is_subclass_of($app, Console::class)) {
+        $console = new $app;
+        break;
+    }
+}
+$console->handle();

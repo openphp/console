@@ -13,13 +13,17 @@
     "php": ">=7.2",
     "ext-json": "*",
     "symfony/console": "^5.4",
-    "symfony/process": "^5.4"
+    "symfony/process": "^5.4",
+    "dragonmantank/cron-expression": "^3.3"
   },
   "autoload": {
     "psr-4": {
       "Openphp\\Console\\": "src/"
     }
   },
+  "bin": [
+    "bin/openphp-console"
+  ],
   "scripts": {
     "fresh": [
       "rm -rf vendor composer.lock",
