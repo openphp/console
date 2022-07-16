@@ -3,6 +3,7 @@
 namespace Openphp\Console\Scheduling;
 
 use Openphp\Console\Application;
+use Openphp\Console\Command;
 use Openphp\Console\ProcessUtils;
 
 class Schedule
@@ -28,18 +29,19 @@ class Schedule
     /**
      * @param $command
      * @param array $parameters
-     * @param string $phpScriptBinary
+     * @param string $consoleName
      * @return Event
      */
-    public function command($command, array $parameters = [], string $phpScriptBinary = '')
+    public function command($command, array $parameters = [], string $consoleName = '')
     {
         if (class_exists($command)) {
             $command = new $command;
+            /** @var Command $command */
             return $this->exec(
-                Application::formatCommandString($command->getName(), $phpScriptBinary), $parameters
+                Application::formatCommandString($command->getName(), $consoleName), $parameters
             )->description($command->getDescription());
         }
-        return $this->exec(Application::formatCommandString($command, $phpScriptBinary), $parameters);
+        return $this->exec(Application::formatCommandString($command, $consoleName), $parameters);
     }
 
     /**
