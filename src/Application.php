@@ -24,7 +24,7 @@ class Application extends SymfonyApplication
     /**
      * @var string
      */
-    public static $consoleName = 'openphp';
+    public $consoleName = 'openphp';
     /**
      * @var SymfonyCommand[]
      */
@@ -37,7 +37,7 @@ class Application extends SymfonyApplication
     {
         $this->setAutoExit(false);
         $this->setCatchExceptions(false);
-        parent::__construct(static::$consoleName, $version);
+        parent::__construct($this->consoleName, $version);
     }
 
     /**
@@ -68,7 +68,7 @@ class Application extends SymfonyApplication
         if ($commands = $this->commands) {
             $this->resolveCommands($commands);
         }
-        return parent::run($input, $output); 
+        return parent::run($input, $output);
     }
 
 
@@ -82,22 +82,18 @@ class Application extends SymfonyApplication
     }
 
     /**
-     * Determine the proper Artisan executable.
-     * @return string
-     */
-    public static function phpConsoleName()
-    {
-        return ProcessUtils::escapeArgument(defined('CONSOLE_NAME') ? CONSOLE_NAME : static::$consoleName);
-    }
-
-    /**
      * Format the given command as a fully-qualified executable command.
      * @param string $string 自定义命令
+     * @param string $consoleName 自定义命令入口文件
      * @return string
      */
-    public static function formatCommandString(string $string)
+    public static function formatCommandString(string $string, string $consoleName = '')
     {
-        return sprintf('%s %s %s', static::phpBinary(), static::phpConsoleName(), $string);
+        return sprintf('%s %s %s',
+            static::phpBinary(),
+            ProcessUtils::escapeArgument($consoleName ?: (defined('CONSOLE_NAME') ? CONSOLE_NAME : (new static())->consoleName)),
+            $string
+        );
     }
 
 
